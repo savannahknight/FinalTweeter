@@ -1,7 +1,17 @@
 package edu.byu.cs.tweeter.server.service;
 
+import edu.byu.cs.tweeter.model.net.request.FollowToggleRequest;
+import edu.byu.cs.tweeter.model.net.request.FollowersRequest;
 import edu.byu.cs.tweeter.model.net.request.FollowingRequest;
+import edu.byu.cs.tweeter.model.net.request.GetFollowersCountRequest;
+import edu.byu.cs.tweeter.model.net.request.GetFollowingCountRequest;
+import edu.byu.cs.tweeter.model.net.request.IsFollowerRequest;
+import edu.byu.cs.tweeter.model.net.response.FollowToggleResponse;
+import edu.byu.cs.tweeter.model.net.response.FollowersResponse;
 import edu.byu.cs.tweeter.model.net.response.FollowingResponse;
+import edu.byu.cs.tweeter.model.net.response.GetFollowersCountResponse;
+import edu.byu.cs.tweeter.model.net.response.GetFollowingCountResponse;
+import edu.byu.cs.tweeter.model.net.response.IsFollowerResponse;
 import edu.byu.cs.tweeter.server.dao.FollowDAO;
 
 /**
@@ -19,12 +29,59 @@ public class FollowService {
      * @return the followees.
      */
     public FollowingResponse getFollowees(FollowingRequest request) {
-        if(request.getFollowerAlias() == null) {
-            throw new RuntimeException("[Bad Request] Request needs to have a follower alias");
+        if(request.getUserAlias() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a follower alias");
         } else if(request.getLimit() <= 0) {
-            throw new RuntimeException("[Bad Request] Request needs to have a positive limit");
+            throw new RuntimeException("[BadRequest] Request needs to have a positive limit");
         }
-        return getFollowingDAO().getFollowees(request);
+        return getFollowDAO().getFollowees(request);
+    }
+
+    public FollowersResponse getFollowers(FollowersRequest request) {
+        if(request.getUserAlias() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a follower alias");
+        } else if(request.getLimit() <= 0) {
+            throw new RuntimeException("[BadRequest] Request needs to have a positive limit");
+        }
+        return getFollowDAO().getFollowers(request);
+    }
+
+    public FollowToggleResponse follow(FollowToggleRequest request) {
+        if(request.getFollowee() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a followee");
+        }
+        return getFollowDAO().follow();
+    }
+
+    public FollowToggleResponse unfollow(FollowToggleRequest request) {
+        if(request.getFollowee() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a followee");
+        }
+        return getFollowDAO().unfollow();
+    }
+
+    public GetFollowersCountResponse getFollowersCount(GetFollowersCountRequest request) {
+        if(request.getTargetUser() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a user alias");
+        }
+        return getFollowDAO().getFollowersCount();
+    }
+
+    public GetFollowingCountResponse getFollowingCount(GetFollowingCountRequest request) {
+        if(request.getTargetUser() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a user alias");
+        }
+        return getFollowDAO().getFollowingCount();
+    }
+
+    public IsFollowerResponse isFollower(IsFollowerRequest request) {
+        if(request.getFollowee() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a followee");
+        }
+        if(request.getFollower() == null) {
+            throw new RuntimeException("[BadRequest] Request needs to have a follower");
+        }
+        return getFollowDAO().isFollower();
     }
 
     /**
@@ -34,7 +91,7 @@ public class FollowService {
      *
      * @return the instance.
      */
-    FollowDAO getFollowingDAO() {
+    FollowDAO getFollowDAO() {
         return new FollowDAO();
     }
 }

@@ -1,14 +1,19 @@
 package edu.byu.cs.tweeter.client.model.service.backgroundTask;
 
 import android.os.Handler;
+import android.util.Log;
 
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.model.net.request.FollowToggleRequest;
+import edu.byu.cs.tweeter.model.net.response.FollowToggleResponse;
 
 /**
  * Background task that establishes a following relationship between two users.
  */
 public class FollowTask extends AuthenticatedTask {
+    private static final String URL_PATH = "/follow";
+    private static final String LOG_TAG = "followTask";
     /**
      * The user that is being followed.
      */
@@ -21,13 +26,20 @@ public class FollowTask extends AuthenticatedTask {
 
     @Override
     protected void runTask() {
-        // We could do this from the presenter, without a task and handler, but we will
-        // eventually access the database from here when we aren't using dummy data.
+        try {
+            FollowToggleRequest request = new FollowToggleRequest(getAuthToken(), followee);
+            FollowToggleResponse response = getServerFacade().followToggle(request, URL_PATH);
 
-        // Call sendSuccessMessage if successful
-        sendSuccessMessage();
-        // or call sendFailedMessage if not successful
-        // sendFailedMessage()
+            if(response.isSuccess()) {
+                sendSuccessMessage();
+            }
+            else {
+                sendFailedMessage(response.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e(LOG_TAG, ex.getMessage(), ex);
+            sendExceptionMessage(ex);
+        }
     }
 
 }
