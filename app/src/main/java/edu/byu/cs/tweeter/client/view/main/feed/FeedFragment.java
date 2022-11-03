@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.byu.cs.client.R;
+import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.FeedPresenter;
 import edu.byu.cs.tweeter.client.presenter.template.PagedView;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;

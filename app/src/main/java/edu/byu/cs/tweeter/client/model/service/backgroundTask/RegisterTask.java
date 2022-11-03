@@ -1,15 +1,21 @@
 package edu.byu.cs.tweeter.client.model.service.backgroundTask;
 
 import android.os.Handler;
+import android.util.Log;
 
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.model.net.request.RegisterRequest;
+import edu.byu.cs.tweeter.model.net.response.AuthenticationResponse;
 import edu.byu.cs.tweeter.util.Pair;
 
 /**
  * Background task that creates a new user account and logs in the new user (i.e., starts a session).
  */
 public class RegisterTask extends AuthenticateTask {
+    private static final String URL_PATH = "/register";
+    private static final String LOG_TAG = "RegisterTask";
+
 
     /**
      * The user's first name.
@@ -36,8 +42,24 @@ public class RegisterTask extends AuthenticateTask {
 
     @Override
     protected Pair<User, AuthToken> runAuthenticationTask() {
-        User registeredUser = getFakeData().getFirstUser();
-        AuthToken authToken = getFakeData().getAuthToken();
+        User registeredUser = null;
+        AuthToken authToken = null;
+        try {
+            RegisterRequest request = new RegisterRequest(username, password, firstName, lastName, image);
+            AuthenticationResponse response = getServerFacade().register(request, URL_PATH);
+
+            if(response.isSuccess()) {
+                registeredUser = response.getUser();
+                authToken = response.getAuthToken();
+                return new Pair<>(registeredUser, authToken);
+            }
+            else {
+                sendFailedMessage(response.getMessage());
+            }
+        } catch (Exception ex) {
+            Log.e(LOG_TAG, ex.getMessage(), ex);
+            sendExceptionMessage(ex);
+        }
         return new Pair<>(registeredUser, authToken);
     }
 }

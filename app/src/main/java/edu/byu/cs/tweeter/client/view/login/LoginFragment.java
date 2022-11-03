@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import edu.byu.cs.client.R;
+import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.LoginPresenter;
 import edu.byu.cs.tweeter.client.presenter.template.AuthenticationView;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
