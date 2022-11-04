@@ -17,9 +17,9 @@ public class UserService {
 
     public AuthenticationResponse login(LoginRequest request) {
         if(request.getUsername() == null){
-            throw new RuntimeException("[Bad Request] Missing a username");
+            throw new RuntimeException("[BadRequest] Missing a username");
         } else if(request.getPassword() == null) {
-            throw new RuntimeException("[Bad Request] Missing a password");
+            throw new RuntimeException("[BadRequest] Missing a password");
         }
 
         return getUserDao().login(request);
@@ -48,6 +48,9 @@ public class UserService {
     }
 
     public LogoutResponse logout(LogoutRequest request) {
+        if(request.getAuthToken() == null){
+            throw new RuntimeException("[BadRequest] Missing an auth token");
+        }
         return getUserDao().logout(request);
     }
 
