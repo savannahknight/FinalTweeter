@@ -23,11 +23,11 @@ import edu.byu.cs.tweeter.model.net.request.LogoutRequest;
 import edu.byu.cs.tweeter.model.net.response.LogoutResponse;
 import edu.byu.cs.tweeter.server.dao.AuthTokenDAO;
 
-public class AuthTokenDAODynamo implements AuthTokenDAO {
+public class AuthTokenDAODynamo extends BaseDAODynamo implements AuthTokenDAO {
     final String TableName = "AuthToken";
     Table table = dynamoDB.getTable(TableName);
 
-    //final static long INACTIVITY_MIN_LIMIT = 5;
+    final static long INACTIVITY_MIN_LIMIT = 5;
     @Override
     public AuthToken generateAuthToken(User user) {
         AuthToken authToken = getNewAuthToken();

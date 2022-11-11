@@ -36,6 +36,6 @@ public class DynamoDAOFactory implements DAOFactory {
 
     @Override
     public ImageDAO getImageDAO() {
-        return ImageDAOUsingS3();
+        return new ImageDAOUsingS3();
     }
 }

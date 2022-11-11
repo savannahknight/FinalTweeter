@@ -32,7 +32,7 @@ import edu.byu.cs.tweeter.server.dao.FollowDAO;
 
 
 public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
-    private final String TableName = "follows";
+    private final String TableName = "Follow";
     Table table = dynamoDB.getTable(TableName);
 
 
