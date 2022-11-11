@@ -142,9 +142,6 @@ public class MainActivity extends AppCompatActivity implements StatusDialogFragm
 
     @Override
     public void onStatusPosted(String post) {
-//        postingToast = Toast.makeText(this, "Posting Status...", Toast.LENGTH_LONG);
-//        postingToast.show();
-
         try {
             Status newStatus = new Status(post, presenter.getCurrUser(), presenter.getFormattedDateTime(), presenter.parseURLs(post), presenter.parseMentions(post));
             presenter.postStatus(newStatus);

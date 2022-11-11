@@ -88,23 +88,11 @@ public class StatusDAO {
         return new PostStatusResponse(true);
     }
 
-    /**
-     * Returns the list of dummy followee data. This is written as a separate method to allow
-     * mocking of the followees.
-     *
-     * @return the followees.
-     */
     List<Status> getDummyStatuses() {
         return getFakeData().getFakeStatuses();
     }
 
-    /**
-     * Returns the {@link FakeData} object used to generate dummy followees.
-     * This is written as a separate method to allow mocking of the {@link FakeData}.
-     *
-     * @return a {@link FakeData} instance.
-     */
     FakeData getFakeData() {
-        return new FakeData();
+        return FakeData.getInstance();
     }
 }

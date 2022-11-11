@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: software.amazon.awssdk:netty-nio-client:2.18.12">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/software.amazon.awssdk/netty-nio-client/2.18.12/1856542de2bb312d1bc68e2c0f57544f2af05aa6/netty-nio-client-2.18.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/software.amazon.awssdk/netty-nio-client/2.18.12/a57c8c974ee02ac0bf2c011db333f668f50c4fc1/netty-nio-client-2.18.12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

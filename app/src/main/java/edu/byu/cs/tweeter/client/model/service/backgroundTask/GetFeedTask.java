@@ -40,6 +40,7 @@ public class GetFeedTask extends PagedStatusTask {
             if(response.isSuccess()) {
                 statuses = response.getStatuses();
                 hasMorePages = response.getHasMorePages();
+
                 return new Pair<>(statuses, hasMorePages);
             }
             else {

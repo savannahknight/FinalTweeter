@@ -43,6 +43,7 @@ public abstract class BackgroundTask implements Runnable {
 
     protected FakeData getFakeData() {
         return new FakeData();
+        //FakeData.getInstance();
     }
 
     /**
