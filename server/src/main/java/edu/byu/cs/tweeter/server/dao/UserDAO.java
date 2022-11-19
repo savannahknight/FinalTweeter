@@ -1,5 +1,7 @@
 package edu.byu.cs.tweeter.server.dao;
 
+import java.util.List;
+
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.net.request.GetFollowersCountRequest;
@@ -29,4 +31,5 @@ public interface UserDAO {
     boolean incrementDecrementFollowCount(String userAlias, boolean increment, String attributeToChange);
 
     boolean checkIfUserInDB(String userAlias);
+    void addUserBatch(List<User> users);
 }

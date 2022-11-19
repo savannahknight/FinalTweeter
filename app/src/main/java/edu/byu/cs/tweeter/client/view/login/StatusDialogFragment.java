@@ -62,7 +62,7 @@ public class StatusDialogFragment extends AppCompatDialogFragment {
         alias.setTextSize(15);
         alias.setTextColor(getResources().getColor(R.color.lightGray));
         image = view.findViewById(R.id.dialogImage);
-        Picasso.get().load(Cache.getInstance().getCurrUser().getImageUrl()).into(image);
+        Picasso.get().load(Cache.getInstance().getCurrUser().getImage()).into(image);
         post = view.findViewById(R.id.dialogPost);
 
         post.addTextChangedListener(new TextWatcher() {

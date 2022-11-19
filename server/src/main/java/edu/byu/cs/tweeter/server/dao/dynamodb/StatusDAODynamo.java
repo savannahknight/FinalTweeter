@@ -27,6 +27,7 @@ import edu.byu.cs.tweeter.server.dao.StatusDAO;
 public class StatusDAODynamo extends BaseDAODynamo implements StatusDAO {
     private final String tableName = "Status";
     Table table = dynamoDB.getTable(tableName);
+    //sort key
 
     @Override
     public StoryResponse getStory(StoryRequest request) {
@@ -78,12 +79,13 @@ public class StatusDAODynamo extends BaseDAODynamo implements StatusDAO {
         } catch (Exception e) {
             System.err.println("Unable to query story of " + request.getUserAlias());
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] get story failed for " + request.getUserAlias());
+            throw new RuntimeException("[ServerError] get story failed for " + request.getUserAlias());
         }
     }
 
     @Override
     public PostStatusResponse postStatus(PostStatusRequest request) {
+        System.out.println("Request" + request.getStatus());
         try {
             System.out.println("Adding a new status...");
             Gson gson = new Gson();
@@ -100,7 +102,7 @@ public class StatusDAODynamo extends BaseDAODynamo implements StatusDAO {
         } catch (Exception e) {
             System.err.println("Unable to add item: " + request.toString());
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] postStatus failed");
+            throw new RuntimeException("[ServerError] postStatus failed");
         }
     }
 }

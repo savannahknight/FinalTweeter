@@ -151,7 +151,7 @@ public class FollowersFragment extends Fragment implements PagedView<User> {
             userAlias.setText(user.getAlias());
             userName.setText(user.getName());
 
-            Picasso.get().load(user.getImageUrl()).into(userImage);
+            Picasso.get().load(user.getImage()).into(userImage);
         }
     }
 

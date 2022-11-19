@@ -27,4 +27,5 @@ public interface FollowDAO {
     FollowToggleResponse unfollow(FollowToggleRequest request, User currUser);
     IsFollowerResponse isFollower(IsFollowerRequest request);
     List<String> getAllFollowers(User user);
+    void addFollowersBatch(List<User> users, String followTarget);
 }

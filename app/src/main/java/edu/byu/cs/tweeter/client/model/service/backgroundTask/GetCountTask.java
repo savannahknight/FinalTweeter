@@ -30,7 +30,9 @@ public abstract class GetCountTask extends AuthenticatedTask {
         count = runCountTask();
 
         // Call sendSuccessMessage if successful
-        sendSuccessMessage();
+        if (count != -1) {
+            sendSuccessMessage();
+        }
         // or call sendFailedMessage if not successful
         // sendFailedMessage()
     }

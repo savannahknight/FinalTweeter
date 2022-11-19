@@ -124,7 +124,7 @@ public class FollowingFragment extends Fragment implements PagedView<User> {
         void bindUser(User user) {
             userAlias.setText(user.getAlias());
             userName.setText(user.getName());
-            Picasso.get().load(user.getImageUrl()).into(userImage);
+            Picasso.get().load(user.getImage()).into(userImage);
         }
     }
 

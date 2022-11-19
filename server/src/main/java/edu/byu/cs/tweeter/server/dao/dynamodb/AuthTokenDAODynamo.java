@@ -49,7 +49,7 @@ public class AuthTokenDAODynamo extends BaseDAODynamo implements AuthTokenDAO {
         } catch (Exception e) {
             System.err.println("Unable to add item: " + authToken.getToken());
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] AuthToken generation failed");
+            throw new RuntimeException("[ServerError] AuthToken generation failed");
         }
     }
     private static AuthToken getNewAuthToken() {
@@ -81,7 +81,7 @@ public class AuthTokenDAODynamo extends BaseDAODynamo implements AuthTokenDAO {
         } catch (Exception e) {
             System.err.println("Unable to add item: " + request.getAuthToken().getToken());
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] AuthToken generation failed");
+            throw new RuntimeException("[ServerError] AuthToken generation failed");
         }
     }
 
@@ -94,7 +94,7 @@ public class AuthTokenDAODynamo extends BaseDAODynamo implements AuthTokenDAO {
             return (String) authTokenItem.get("user_alias");
         }
         catch (Exception e) {
-            throw new RuntimeException("[DBError] Failed to get current user for session");
+            throw new RuntimeException("[ServerError] Failed to get current user for session");
         }
     }
 
@@ -130,7 +130,7 @@ public class AuthTokenDAODynamo extends BaseDAODynamo implements AuthTokenDAO {
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            throw new RuntimeException("[DBError] Failed to authenticate current user session");
+            throw new RuntimeException("[ServerError] Failed to authenticate current user session");
         }
     }
 }

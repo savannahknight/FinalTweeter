@@ -71,7 +71,9 @@ public abstract class PagedTask<T> extends AuthenticatedTask {
         hasMorePages = pageOfItems.getSecond();
 
         // Call sendSuccessMessage if successful
-        sendSuccessMessage();
+        if (items != null) {
+            sendSuccessMessage();
+        }
         // or call sendFailedMessage if not successful
         // sendFailedMessage()
     }

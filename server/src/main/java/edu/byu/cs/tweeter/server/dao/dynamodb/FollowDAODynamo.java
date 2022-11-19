@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.server.dao.dynamodb;
 
+import com.amazonaws.services.dynamodbv2.document.BatchWriteItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.DeleteItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Item;
@@ -9,14 +10,16 @@ import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.logging.Logger;
 
 import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.net.request.FollowToggleRequest;
@@ -34,6 +37,7 @@ import edu.byu.cs.tweeter.server.dao.FollowDAO;
 public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
     private final String TableName = "Follow";
     Table table = dynamoDB.getTable(TableName);
+    private final static Logger logger = Logger.getLogger(FollowDAODynamo.class.toString());
 
 
     /**
@@ -89,7 +93,7 @@ public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
         } catch (Exception e) {
             System.err.println("Unable to query followees of " + request.getUserAlias());
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] get followees failed for " + request.getUserAlias());
+            throw new RuntimeException("[ServerError] get followees failed for " + request.getUserAlias());
         }
 
     }
@@ -141,23 +145,26 @@ public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
         } catch (Exception e) {
             System.err.println("Unable to query followers of " + request.getUserAlias());
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] get followers failed for " + request.getUserAlias());
+            throw new RuntimeException("[ServerError] get followers failed for " + request.getUserAlias());
         }
     }
 
     @Override
     public FollowToggleResponse follow(FollowToggleRequest request, User currUser) {
-
+        //not reading in item from request //serialization error
+        System.out.println("Request:" + request.getAuthToken());
+        System.out.println("Request:" + request.getFollowee());
+        System.out.println("Request:" + request.getFollowee().getImage());
         try {
             System.out.println("Adding a new item...");
             PutItemOutcome outcome = table
                     .putItem(new Item().withPrimaryKey("follower_handle", currUser.getAlias(), "followee_handle", request.getFollowee().getAlias())
                             .withString("follower_first_name", currUser.getFirstName())
                             .withString("follower_last_name", currUser.getLastName())
-                            .withString("follower_image", currUser.getImageUrl())
+                            .withString("follower_image", currUser.getImage())
                             .withString("followee_first_name", request.getFollowee().getFirstName())
                             .withString("followee_last_name", request.getFollowee().getLastName())
-                            .withString("followee_image", request.getFollowee().getImageUrl()));
+                            .withString("followee_image", request.getFollowee().getImage()));
 
 
             System.out.println("PutItem succeeded:\n" + outcome);
@@ -165,7 +172,7 @@ public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
         } catch (Exception e) {
             System.err.println("Unable to add item: " + "{ Follower: " + currUser.getAlias() + " Followee: " + request.getFollowee().getAlias() + " }");
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] follow failed");
+            throw new RuntimeException("[ServerError] follow failed");
         }
     }
 
@@ -181,7 +188,7 @@ public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
         } catch (Exception e) {
             System.err.println("Unable to delete item: " + "{ Follower: " + currUser.getAlias() + " Followee: " + request.getFollowee().getAlias() + " }");
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] unfollow failed");
+            throw new RuntimeException("[ServerError] unfollow failed");
         }
     }
 
@@ -227,7 +234,7 @@ public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
         catch (Exception e) {
             System.err.println("Unable to query followers of: " + user.getAlias());
             System.err.println(e.getMessage());
-            throw new RuntimeException("[DBError] propagate status to followers failed, find followers failed");
+            throw new RuntimeException("[ServerError] propagate status to followers failed, find followers failed");
         }
     }
 
@@ -260,5 +267,50 @@ public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
         }
 
         return followeesIndex;
+    }
+    @Override
+    public void addFollowersBatch(List<User> users, String followTarget) {
+
+        // Constructor for TableWriteItems takes the name of the table, which I have stored in TABLE_USER
+        TableWriteItems items = new TableWriteItems(TableName);
+
+        // Add each user into the TableWriteItems object
+        for (User user : users) {
+            Item item = new Item().withPrimaryKey("follower_handle", user.getAlias(), "followee_handle", "@sav")
+                    .withString("follower_first_name", user.getFirstName())
+                    .withString("follower_last_name", user.getLastName())
+                    .withString("follower_image", user.getImage())
+                    .withString("followee_first_name", "Savannah")
+                    .withString("followee_last_name", "Knight")
+                    .withString("followee_image", "https://tweeterapp340.s3.amazonaws.com/%40tom");
+            items.addItemToPut(item);
+
+            // 25 is the maximum number of items allowed in a single batch write.
+            // Attempting to write more than 25 items will result in an exception being thrown
+            if (items.getItemsToPut() != null && items.getItemsToPut().size() == 25) {
+                loopBatchWrite(items);
+                items = new TableWriteItems(TableName);
+            }
+        }
+
+        // Write any leftover items
+        if (items.getItemsToPut() != null && items.getItemsToPut().size() > 0) {
+            loopBatchWrite(items);
+        }
+    }
+
+    private void loopBatchWrite(TableWriteItems items) {
+
+        // The 'dynamoDB' object is of type DynamoDB and is declared statically in this example
+        BatchWriteItemOutcome outcome = dynamoDB.batchWriteItem(items);
+        logger.info("Wrote Follows Batch");
+
+        // Check the outcome for items that didn't make it onto the table
+        // If any were not added to the table, try again to write the batch
+        while (outcome.getUnprocessedItems().size() > 0) {
+            Map<String, List<WriteRequest>> unprocessedItems = outcome.getUnprocessedItems();
+            outcome = dynamoDB.batchWriteItemUnprocessed(unprocessedItems);
+            logger.info("Wrote more Follows");
+        }
     }
 }

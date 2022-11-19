@@ -158,7 +158,7 @@ public class StoryFragment extends Fragment implements PagedView<Status> {
          * @param status the status.
          */
         void bindStatus(Status status) {
-            Picasso.get().load(status.getUser().getImageUrl()).into(userImage);
+            Picasso.get().load(status.getUser().getImage()).into(userImage);
             userAlias.setText(status.getUser().getAlias());
             userName.setText(status.getUser().getName());
             datetime.setText(status.getDate());

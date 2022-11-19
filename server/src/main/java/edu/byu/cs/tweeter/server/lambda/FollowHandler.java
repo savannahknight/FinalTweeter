@@ -13,6 +13,7 @@ public class FollowHandler implements RequestHandler<FollowToggleRequest, Follow
     @Override
     public FollowToggleResponse handleRequest(FollowToggleRequest request, Context context) {
         FollowService service = new FollowService(new DynamoDAOFactory());
+        System.out.println("Request:" + request.getFollowee());
         return service.follow(request);
     }
 }

@@ -11,21 +11,8 @@
     <orderEntry type="module" module-name="Tweeter.shared.main" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.6" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:aws-lambda-java-core:1.2.0" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:dynamodb-enhanced:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:dynamodb:2.18.12" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:aws-java-sdk-dynamodb:1.12.339" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:aws-java-sdk-core:1.12.339" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:aws-core:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:auth:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:regions:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:sdk-core:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:http-client-spi:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:utils:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:annotations:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:aws-json-protocol:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:protocol-core:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:profiles:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:metrics-spi:2.18.12" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:aws-java-sdk-s3:1.12.339" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:jmespath-java:1.12.339" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
@@ -35,27 +22,9 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.12.7" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.12.7.1" level="project" />
     <orderEntry type="library" name="Gradle: joda-time:joda-time:2.8.1" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:endpoints-spi:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.eventstream:eventstream:1.0.1" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:json-utils:2.18.12" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.30" level="project" />
-    <orderEntry type="library" name="Gradle: org.reactivestreams:reactive-streams:1.0.3" level="project" />
-    <orderEntry type="library" name="Gradle: software.amazon.awssdk:third-party-jackson-core:2.18.12" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:aws-java-sdk-kms:1.12.339" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.12.7" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.12.7" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: software.amazon.awssdk:apache-client:2.18.12" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: software.amazon.awssdk:netty-nio-client:2.18.12" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-codec-http2:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-codec-http:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-handler:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-codec:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-transport-classes-epoll:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-transport:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-buffer:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-common:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-resolver:4.1.77.Final" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.netty:netty-transport-native-unix-common:4.1.77.Final" level="project" />
   </component>
 </module>

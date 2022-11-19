@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements StatusDialogFragm
         userAlias.setText(selectedUser.getAlias());
 
         ImageView userImageView = findViewById(R.id.userImage);
-        Picasso.get().load(selectedUser.getImageUrl()).into(userImageView);
+        Picasso.get().load(selectedUser.getImage()).into(userImageView);
 
         followeeCount = findViewById(R.id.followeeCount);
         followeeCount.setText(getString(R.string.followeeCount, "..."));

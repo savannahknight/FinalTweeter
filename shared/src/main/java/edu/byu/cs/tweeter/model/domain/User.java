@@ -11,7 +11,7 @@ public class User implements Comparable<User>, Serializable {
     private String firstName;
     private String lastName;
     private String alias;
-    private String imageUrl;
+    private String image;
 
     /**
      * Allows construction of the object from Json. Private so it won't be called by other code.
@@ -26,7 +26,7 @@ public class User implements Comparable<User>, Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.alias = alias;
-        this.imageUrl = imageURL;
+        this.image = imageURL;
     }
 
     public String getFirstName() {
@@ -57,12 +57,12 @@ public class User implements Comparable<User>, Serializable {
         this.alias = alias;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class User implements Comparable<User>, Serializable {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", alias='" + alias + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
+                ", imageUrl='" + image + '\'' +
                 '}';
     }
 
