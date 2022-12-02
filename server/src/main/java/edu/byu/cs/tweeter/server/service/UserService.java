@@ -1,5 +1,8 @@
 package edu.byu.cs.tweeter.server.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.net.request.GetUserRequest;
@@ -12,6 +15,7 @@ import edu.byu.cs.tweeter.model.net.response.LoginResponse;
 import edu.byu.cs.tweeter.model.net.response.LogoutResponse;
 import edu.byu.cs.tweeter.server.dao.DAOFactory;
 import edu.byu.cs.tweeter.server.dao.UserDAO;
+import edu.byu.cs.tweeter.server.dao.dynamodb.DynamoDAOFactory;
 import edu.byu.cs.tweeter.util.FakeData;
 
 public class UserService {
@@ -75,6 +79,21 @@ public class UserService {
 
     private UserDAO getUserDao() {
         return daoFactory.getUserDAO();
+    }
+
+    public static void main(String[] args) {
+        List<User> usersToAdd = new ArrayList<>();
+        for (int i = 0; i < 10000; i++) {
+            String firstName = "Batch" + i;
+            String lastName = "Test" + i;
+            String userAlias = "@batch" + i;
+            String imageUrl =  "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
+            User user = new User(firstName, lastName, userAlias, imageUrl);
+            usersToAdd.add(user);
+        }
+
+        DAOFactory daoFactory = new DynamoDAOFactory();
+        daoFactory.getUserDAO().addUserBatch(usersToAdd);
     }
 
 }

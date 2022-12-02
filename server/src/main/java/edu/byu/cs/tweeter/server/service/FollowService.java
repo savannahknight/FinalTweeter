@@ -1,5 +1,8 @@
 package edu.byu.cs.tweeter.server.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.net.request.FollowToggleRequest;
 import edu.byu.cs.tweeter.model.net.request.FollowersRequest;
@@ -15,6 +18,7 @@ import edu.byu.cs.tweeter.model.net.response.GetFollowingCountResponse;
 import edu.byu.cs.tweeter.model.net.response.IsFollowerResponse;
 import edu.byu.cs.tweeter.server.dao.DAOFactory;
 import edu.byu.cs.tweeter.server.dao.FollowDAO;
+import edu.byu.cs.tweeter.server.dao.dynamodb.DynamoDAOFactory;
 
 /**
  * Contains the business logic for getting the users a user is following.
@@ -68,7 +72,11 @@ public class FollowService {
         }
         String currentUserAlias = daoFactory.getAuthTokenDAO().getCurrUserAlias(request.getAuthToken());
         User currentUser = daoFactory.getUserDAO().getUser(currentUserAlias);
+        System.out.println("current user: " + currentUser);
+        System.out.println("follow toggle request: " + request.getFollowee());
         FollowToggleResponse response = getFollowDAO().follow(request, currentUser);
+        System.out.println("Response: " + response);
+
 
         daoFactory.getUserDAO().incrementDecrementFollowCount(currentUserAlias, true, "following_count");
         daoFactory.getUserDAO().incrementDecrementFollowCount(request.getFollowee().getAlias(), true, "followers_count");
@@ -126,6 +134,21 @@ public class FollowService {
         }
 
         return getFollowDAO().isFollower(request);
+    }
+
+    public static void main(String[] args) {
+        List<User> usersToAdd = new ArrayList<>();
+        for (int i = 0; i < 10000; i++) {
+            String firstName = "Batch" + i;
+            String lastName = "Test" + i;
+            String userAlias = "@batch" + i;
+            String imageUrl = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
+            User user = new User(firstName, lastName, userAlias, imageUrl);
+            usersToAdd.add(user);
+        }
+
+        DAOFactory daoFactory = new DynamoDAOFactory();
+        daoFactory.getFollowDAO().addFollowersBatch(usersToAdd);
     }
 
     /**

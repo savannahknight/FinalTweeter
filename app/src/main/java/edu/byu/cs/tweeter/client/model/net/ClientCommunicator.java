@@ -90,6 +90,7 @@ class ClientCommunicator {
             switch (connection.getResponseCode()) {
                 case HttpURLConnection.HTTP_OK:
                     String responseString = getResponse(connection.getInputStream());
+                    System.out.println("RESPONSE" + responseString);
                     return JsonSerializer.deserialize(responseString, returnType);
                 case HttpURLConnection.HTTP_BAD_REQUEST:
                     ErrorResponse errorResponse = getErrorResponse(connection);

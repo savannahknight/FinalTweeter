@@ -58,9 +58,9 @@ public class GenerateUserData {
         if (users.size() > 0) {
             userDAO.addUserBatch(users);
         }
-        if (followers.size() > 0) {
-            followDAO.addFollowersBatch(followers, FOLLOW_TARGET);
-        }
+//        if (followers.size() > 0) {
+//            followDAO.addFollowersBatch(followers, FOLLOW_TARGET);
+//        }
 
         allStatuses.clear();
 

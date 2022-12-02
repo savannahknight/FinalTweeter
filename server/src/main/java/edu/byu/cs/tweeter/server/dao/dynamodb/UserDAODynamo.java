@@ -130,6 +130,8 @@ public class UserDAODynamo extends BaseDAODynamo implements UserDAO {
             String firstName = (String) userItem.get("first_name");
             String lastName = (String) userItem.get("last_name");
             String imageURL = (String) userItem.get("image_url");
+            System.out.println("user dao user item: " + userItem);
+            System.out.println("user dao user image: " + imageURL);
 
             return new User(firstName, lastName, userAlias, imageURL);
         }

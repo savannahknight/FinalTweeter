@@ -238,6 +238,36 @@ public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
         }
     }
 
+    @Override
+    public void addFollowersBatch(List<User> users) {
+        // Constructor for TableWriteItems takes the name of the table, which I have stored in TABLE_USER
+        TableWriteItems items = new TableWriteItems(TableName);
+
+        // Add each user into the TableWriteItems object
+        for (User user : users) {
+            Item item = new Item().withPrimaryKey("follower_handle", user.getAlias(), "followee_handle", "@mandy")
+                    .withString("follower_first_name", user.getFirstName())
+                    .withString("follower_last_name", user.getLastName())
+                    .withString("follower_image", user.getImage())
+                    .withString("followee_first_name", "mandy")
+                    .withString("followee_last_name", "moore")
+                    .withString("followee_image", "https://cs340-savannah.s3.amazonaws.com/%40mandy");
+            items.addItemToPut(item);
+
+            // 25 is the maximum number of items allowed in a single batch write.
+            // Attempting to write more than 25 items will result in an exception being thrown
+            if (items.getItemsToPut() != null && items.getItemsToPut().size() == 25) {
+                loopBatchWrite(items);
+                items = new TableWriteItems(TableName);
+            }
+        }
+
+        // Write any leftover items
+        if (items.getItemsToPut() != null && items.getItemsToPut().size() > 0) {
+            loopBatchWrite(items);
+        }
+    }
+
 
     /**
      * Determines the index for the first followee in the specified 'allFollowees' list that should
@@ -267,36 +297,6 @@ public class FollowDAODynamo extends BaseDAODynamo implements FollowDAO {
         }
 
         return followeesIndex;
-    }
-    @Override
-    public void addFollowersBatch(List<User> users, String followTarget) {
-
-        // Constructor for TableWriteItems takes the name of the table, which I have stored in TABLE_USER
-        TableWriteItems items = new TableWriteItems(TableName);
-
-        // Add each user into the TableWriteItems object
-        for (User user : users) {
-            Item item = new Item().withPrimaryKey("follower_handle", user.getAlias(), "followee_handle", "@sav")
-                    .withString("follower_first_name", user.getFirstName())
-                    .withString("follower_last_name", user.getLastName())
-                    .withString("follower_image", user.getImage())
-                    .withString("followee_first_name", "Savannah")
-                    .withString("followee_last_name", "Knight")
-                    .withString("followee_image", "https://tweeterapp340.s3.amazonaws.com/%40tom");
-            items.addItemToPut(item);
-
-            // 25 is the maximum number of items allowed in a single batch write.
-            // Attempting to write more than 25 items will result in an exception being thrown
-            if (items.getItemsToPut() != null && items.getItemsToPut().size() == 25) {
-                loopBatchWrite(items);
-                items = new TableWriteItems(TableName);
-            }
-        }
-
-        // Write any leftover items
-        if (items.getItemsToPut() != null && items.getItemsToPut().size() > 0) {
-            loopBatchWrite(items);
-        }
     }
 
     private void loopBatchWrite(TableWriteItems items) {

@@ -89,8 +89,9 @@ public class FeedDAODynamo extends BaseDAODynamo implements FeedDAO {
     }
 
     @Override
-    public boolean addStatusToFeed(List<String> followerAliases, Status status) {
-        for(String userAlias : followerAliases) {
+    public boolean addStatusToFeed(List<User> followerAliases, Status status) {
+        int counter = 0;
+        for(User userAlias : followerAliases) {
             try {
                 System.out.println("Adding a new status to feed...");
                 Gson gson = new Gson();
@@ -100,7 +101,8 @@ public class FeedDAODynamo extends BaseDAODynamo implements FeedDAO {
                                 .withString("message", status.getPost()).withList("mentions", status.getMentions())
                                 .withList("urls", status.getUrls()).withString("user", userJson));
 
-                System.out.println("PutItem succeeded:\n" + outcome.getPutItemResult().toString());
+                counter++;
+                //System.out.println("PutItem succeeded:\n" + outcome.getPutItemResult().toString());
 
             } catch (Exception e) {
                 System.err.println("Unable to add item: " + status + " to feed for user: " + userAlias);
@@ -108,9 +110,10 @@ public class FeedDAODynamo extends BaseDAODynamo implements FeedDAO {
                 throw new RuntimeException("[ServerError] postStatus failed when propagating to user feeds");
             }
         }
-
+        System.out.println("Added the feed for " + counter + " users");
         return true;
     }
+    @Override
     public void addFeedBatch(List<User> followers, Status status) {
 
         // Constructor for TableWriteItems takes the name of the table, which I have stored in TABLE_USER
