@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.byu.cs.tweeter.server.service.StatusServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2022-12-03T23:04:03" hostname="Savannahs-MacBook-Pro-7.local" time="2.962">
+  <properties/>
+  <testcase name="testGetStory_validRequest_correctResponse()" classname="edu.byu.cs.tweeter.server.service.StatusServiceTest" time="2.962">
+    <failure message="java.lang.RuntimeException: [ServerError] Failed to authenticate current user session" type="java.lang.RuntimeException">java.lang.RuntimeException: [ServerError] Failed to authenticate current user session
+	at edu.byu.cs.tweeter.server.dao.dynamodb.AuthTokenDAODynamo.authenticateCurrentUser(AuthTokenDAODynamo.java:133)
+	at edu.byu.cs.tweeter.server.service.StatusService.getStory(StatusService.java:34)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+</failure>
+  </testcase>
+  <system-out><![CDATA[edu.byu.cs.tweeter.model.domain.AuthToken@58a2d9f9
+The provided key element does not match the schema (Service: AmazonDynamoDBv2; Status Code: 400; Error Code: ValidationException; Request ID: 2NK1OQMMFU4OE90S07OBDRT2NNVV4KQNSO5AEMVJF66Q9ASUAAJG; Proxy: null)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

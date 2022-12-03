@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.byu.cs.tweeter.server.service.FollowServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-04T15:34:05" hostname="Savannahs-MacBook-Pro-7.local" time="1.311">
-  <properties/>
-  <testcase name="testGetFollowees_validRequest_correctResponse()" classname="edu.byu.cs.tweeter.server.service.FollowServiceTest" time="1.311"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

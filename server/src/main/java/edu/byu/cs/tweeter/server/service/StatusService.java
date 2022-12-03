@@ -12,6 +12,7 @@ import edu.byu.cs.tweeter.model.net.response.FollowersResponse;
 import edu.byu.cs.tweeter.model.net.response.PostStatusResponse;
 import edu.byu.cs.tweeter.model.net.response.QueueFollowersResponse;
 import edu.byu.cs.tweeter.model.net.response.StoryResponse;
+import edu.byu.cs.tweeter.server.dao.AuthTokenDAO;
 import edu.byu.cs.tweeter.server.dao.DAOFactory;
 import edu.byu.cs.tweeter.server.dao.StatusDAO;
 
@@ -94,7 +95,8 @@ public class StatusService {
         daoFactory.getFeedDAO().addFeedBatch(request.getFollowers(), request.getStatus());
         return new QueueFollowersResponse(true);
     }
-    private StatusDAO getStatusDAO() {
+    public StatusDAO getStatusDAO() {
         return daoFactory.getStatusDAO();
     }
+    public AuthTokenDAO getAuthTokenDAO() {return daoFactory.getAuthTokenDAO();}
 }

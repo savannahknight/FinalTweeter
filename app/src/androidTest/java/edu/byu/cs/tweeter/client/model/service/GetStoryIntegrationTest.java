@@ -3,12 +3,19 @@ package edu.byu.cs.tweeter.client.model.service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import edu.byu.cs.tweeter.client.model.service.observer.PagedObserver;
+import edu.byu.cs.tweeter.client.model.service.observer.ResponseObserver;
+import edu.byu.cs.tweeter.client.presenter.AuthenticationPresenter;
+import edu.byu.cs.tweeter.client.presenter.MainActivityPresenter;
+import edu.byu.cs.tweeter.client.presenter.PagedPresenter;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
@@ -18,9 +25,16 @@ import edu.byu.cs.tweeter.util.FakeData;
 public class GetStoryIntegrationTest {
     private User currentUser;
     private AuthToken currentAuthToken;
+    private Status lastStatus;
 
     private StatusService statusServiceSpy;
-    private StatusServiceObserver observer;
+    private UserService userServiceSpy;
+    //TODO replace this observer
+    private GetItemsObserver observer;
+    private Statu loginObserverSpy;
+
+    private MainActivityPresenter mainPresenterSpy;
+    private PostStatusView postStatusViewSpy;
 
     private CountDownLatch countDownLatch;
 
@@ -31,12 +45,18 @@ public class GetStoryIntegrationTest {
     @BeforeEach
     public void setup() {
         currentUser = new User("FirstName", "LastName", null);
-        currentAuthToken = new AuthToken();
+        currentAuthToken = null;
+
+        lastStatus = new Status("post", currentUser, LocalDateTime.now().toString(), new ArrayList<>(), new ArrayList<>());
 
         statusServiceSpy = Mockito.spy(new StatusService());
+        userServiceSpy = Mockito.spy(new UserService());
+        postStatusViewSpy = Mockito.spy(new PostStatusView());
+        mainPresenterSpy = Mockito.spy(new MainActivityPresenter(postStatusViewSpy));
 
         // Setup an observer for the StatusService
         observer = new StatusServiceObserver();
+        loginObserverSpy = Mockito.spy(new AuthenticationObserver());
 
         // Prepare the countdown latch
         resetCountDownLatch();
