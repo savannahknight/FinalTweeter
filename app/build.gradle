@@ -55,7 +55,8 @@ dependencies {
 
     // Writing and executing Unit Tests on the JUnit Platform
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"
-    testImplementation 'junit:junit:4.12'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'junit:junit:4.12'
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.2"
 
     // View Layer testing dependencies (access to ActivityScenario)

@@ -33,6 +33,8 @@ public class StatusServiceTest {
     public void setup() {
         authToken = new AuthToken();
 
+        //"SselGTuIcSl1HojcRgKqTw=="
+
         User currentUser = new User("FirstName", "LastName", "@test", null);
         Status resultStatus1 = new Status("Test post", currentUser, DateTime.now().toString(), new ArrayList<>(Collections.singletonList("https:www.byu.edu")), new ArrayList<>(Collections.singletonList("@test2")));
         Status resultStatus2 = new Status("Test post2", currentUser, DateTime.now().toString(), new ArrayList<>(Collections.singletonList("https:www.byu.edu")), new ArrayList<>(Collections.singletonList("@test2")));

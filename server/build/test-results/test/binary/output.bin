@@ -1,2 +1,2 @@
-3edu.byu.cs.tweeter.model.domain.AuthToken@58a2d9f9
-ÑThe provided key element does not match the schema (Service: AmazonDynamoDBv2; Status Code: 400; Error Code: ValidationException; Request ID: 2NK1OQMMFU4OE90S07OBDRT2NNVV4KQNSO5AEMVJF66Q9ASUAAJG; Proxy: null)
+3edu.byu.cs.tweeter.model.domain.AuthToken@781711b7
+null
